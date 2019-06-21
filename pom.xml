@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.cipher</groupId>
-	<artifactId>testapp</artifactId>
+	<artifactId>CipherRobot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>CipherRobot</name>
 	<description>Demo project for  Cryptography Using Spring boot Application</description>
