@@ -1,8 +1,12 @@
 package com.cipher.dao;
 
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
-@Repository
-public class DataRepository {
+import org.springframework.data.repository.CrudRepository;
 
+import com.cipher.entities.DataEntity;
+
+public interface DataRepository extends CrudRepository<DataEntity, Long>{
+
+	
 }
