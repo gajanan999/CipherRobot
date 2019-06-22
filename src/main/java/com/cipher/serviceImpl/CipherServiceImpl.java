@@ -12,11 +12,12 @@ public class CipherServiceImpl implements CipherService{
 	@Autowired
 	AESServiceImpl aesServiceImpl;
 	
+	@Autowired
 	DESEncryptionService desEncryptionService;
 	
 	@Override
 	public String encrypt(String value,String key,String algorithm){
-		if(algorithm == "AES") {
+		if(algorithm.equals("AES")) {
 			return aesServiceImpl.encrypt(value, key);
 		}else {
 			return desEncryptionService.encrypt(value, key);
@@ -26,10 +27,10 @@ public class CipherServiceImpl implements CipherService{
 
 	@Override
 	public String decrypt(String encrypted,String key,String algorithm){
-		if(algorithm == "AES") {
-			return aesServiceImpl.encrypt(encrypted, key);
+		if(algorithm.equals("AES")) {
+			return aesServiceImpl.decrypt(encrypted, key);
 		}else {
-			return desEncryptionService.encrypt(encrypted, key);
+			return desEncryptionService.decrypt(encrypted, key);
 		}
 	}
 	
