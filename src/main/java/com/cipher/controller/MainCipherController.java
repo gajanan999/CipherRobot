@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cipher.entities.DataEntity;
+import com.cipher.exception.DatabaseException;
 import com.cipher.service.CipherService;
 import com.cipher.service.DataService;
 import com.cipher.vo.EncryptDecryptRequest;
@@ -44,6 +45,7 @@ public class MainCipherController {
 	 * This function is used for to encrypt the data and store into the database using DataService
 	 * @param EncryptDecryptRequest request
 	 * @return String
+	 * @throws DatabaseException 
 	 */
 	@PostMapping(value="/getEncyption", consumes = "application/json")
 	public String getEncyption(@RequestBody EncryptDecryptRequest entityVo, HttpServletRequest request) {
