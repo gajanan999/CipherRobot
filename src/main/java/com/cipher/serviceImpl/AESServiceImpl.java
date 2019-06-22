@@ -1,49 +1,51 @@
 package com.cipher.serviceImpl;
 
-
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cipher.service.CipherService;
+import com.cipher.utility.IvParameterUtility;
+import com.cipher.utility.KeyUtility;
 
-public class AESServiceImpl implements CipherService {
+@Service
+public class AESServiceImpl{
 
-	private static final String key = "aesEncryptionKey";
-	private static final String initVector = "encryptionIntVec";
+	@Autowired
+	KeyUtility keyUtility;
 	
-	@Override
-	public String encrypt(String value) {
+	@Autowired
+	IvParameterUtility ivParameterUtility;
+	
+	@Autowired
+	CipherService cipherService;
+	
+	private static String algorithm="AES/ECB/PKCS5Padding";
+	
+	public String encrypt(String value, String key) {
 		
 	    try {
-	        IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
-	        SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
-	 
-	        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-	        cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
-	 
-	        byte[] encrypted = cipher.doFinal(value.getBytes());
-	        return Base64.encodeBase64String(encrypted);
+	    	Cipher cipher = Cipher.getInstance(algorithm);
+			cipher.init(Cipher.ENCRYPT_MODE, keyUtility.get128BitKey(key));
+			byte[] inputBytes = value.getBytes(StandardCharsets.ISO_8859_1);	
+			return Base64.getEncoder().encodeToString((cipher.doFinal(inputBytes)));
 	    } catch (Exception ex) {
 	        ex.printStackTrace();
 	    }
 	    return null;
 	}
 
-	@Override
-	public String decrypt(String encrypted) {
-		try {
-	        IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
-	        SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
-	 
-	        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-	        cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
-	        byte[] original = cipher.doFinal(Base64.decodeBase64(encrypted));
-	 
-	        return new String(original);
+	
+	public String decrypt(String encrypted, String key) {
+		try { 
+			Cipher cipher = Cipher.getInstance(algorithm);
+			cipher.init(Cipher.DECRYPT_MODE, keyUtility.get128BitKey(key));
+			byte[] oo=  Base64.getDecoder().decode(encrypted.getBytes("UTF-8"));
+			return new String(cipher.doFinal(oo));
 	    } catch (Exception ex) {
 	        ex.printStackTrace();
 	    }
