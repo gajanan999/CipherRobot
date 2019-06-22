@@ -6,6 +6,7 @@ import java.util.Base64;
 import javax.crypto.Cipher;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.cipher.service.CipherService;
@@ -14,6 +15,9 @@ import com.cipher.utility.KeyUtility;
 
 @Service
 public class AESServiceImpl{
+	
+	private static Cipher encryptCipher;
+	private static Cipher decryptCipher;
 
 	@Autowired
 	KeyUtility keyUtility;
@@ -24,15 +28,16 @@ public class AESServiceImpl{
 	@Autowired
 	CipherService cipherService;
 	
-	private static String algorithm="AES/ECB/PKCS5Padding";
+	@Value("${AES_ALGORITHM}")
+	private String algorithm;
 	
 	public String encrypt(String value, String key) {
 		
 	    try {
-	    	Cipher cipher = Cipher.getInstance(algorithm);
-			cipher.init(Cipher.ENCRYPT_MODE, keyUtility.get128BitKey(key));
+	    	encryptCipher = Cipher.getInstance(algorithm);
+	    	encryptCipher.init(Cipher.ENCRYPT_MODE, keyUtility.get128BitKey(key));
 			byte[] inputBytes = value.getBytes(StandardCharsets.ISO_8859_1);	
-			return Base64.getEncoder().encodeToString((cipher.doFinal(inputBytes)));
+			return Base64.getEncoder().encodeToString((encryptCipher.doFinal(inputBytes)));
 	    } catch (Exception ex) {
 	        ex.printStackTrace();
 	    }
@@ -42,10 +47,10 @@ public class AESServiceImpl{
 	
 	public String decrypt(String encrypted, String key) {
 		try { 
-			Cipher cipher = Cipher.getInstance(algorithm);
-			cipher.init(Cipher.DECRYPT_MODE, keyUtility.get128BitKey(key));
+			decryptCipher = Cipher.getInstance(algorithm);
+			decryptCipher.init(Cipher.DECRYPT_MODE, keyUtility.get128BitKey(key));
 			byte[] oo=  Base64.getDecoder().decode(encrypted.getBytes("UTF-8"));
-			return new String(cipher.doFinal(oo));
+			return new String(decryptCipher.doFinal(oo));
 	    } catch (Exception ex) {
 	        ex.printStackTrace();
 	    }

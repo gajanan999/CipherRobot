@@ -4,6 +4,7 @@ import javax.crypto.Cipher;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.cipher.utility.IvParameterUtility;
@@ -15,7 +16,8 @@ public class DESEncryptionService {
 	private static Cipher encryptCipher;
 	private static Cipher decryptCipher;
 	
-	private static String algorithm="DES/CBC/PKCS5Padding";
+	@Value("{DES_ALGORITHM}")
+	private static String algorithm;
 	
 	@Autowired
 	KeyUtility keyUtility;
