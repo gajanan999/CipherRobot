@@ -10,11 +10,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.cipher.service.CipherService;
+import com.cipher.service.CryptographyService;
 import com.cipher.utility.IvParameterUtility;
 import com.cipher.utility.KeyUtility;
 
 @Service
-public class AESServiceImpl{
+public class AESServiceImpl implements CryptographyService{
 	
 	private static Cipher encryptCipher;
 	private static Cipher decryptCipher;
@@ -56,6 +57,12 @@ public class AESServiceImpl{
 	    }
 	 
 	    return null;
+	}
+
+
+	@Override
+	public String getType() {
+		 return "AESService";
 	}
 
 }

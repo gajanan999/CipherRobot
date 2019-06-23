@@ -15,13 +15,18 @@ public class CipherServiceImpl implements CipherService{
 	@Autowired
 	DESEncryptionService desEncryptionService;
 	
+	@Autowired
+	CryptographyFactory cryptographyFactory;
+	
 	@Override
 	public String encrypt(String value,String key,String algorithm){
-		if(algorithm.equals("AES")) {
-			return aesServiceImpl.encrypt(value, key);
-		}else {
-			return desEncryptionService.encrypt(value, key);
-		}
+		return cryptographyFactory.getService("AESService").encrypt(value, key);
+		
+//		if(algorithm.equals("AES")) {
+//			return aesServiceImpl.encrypt(value, key);
+//		}else {
+//			return desEncryptionService.encrypt(value, key);
+//		}
 		
 	}
 

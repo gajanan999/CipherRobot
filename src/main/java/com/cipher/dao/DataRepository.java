@@ -1,7 +1,5 @@
 package com.cipher.dao;
 
-import java.util.List;
-
 import org.springframework.data.repository.CrudRepository;
 
 import com.cipher.entities.DataEntity;
