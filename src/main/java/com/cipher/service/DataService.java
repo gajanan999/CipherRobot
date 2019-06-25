@@ -9,5 +9,5 @@ public interface DataService {
 
 	public List<DataEntity> getAllDataEntities();
 	
-	public boolean storeAndUpdateDataEntity(EncryptDecryptRequest request, String username);
+	public DataEntity storeAndUpdateDataEntity(EncryptDecryptRequest request, String encryptedString, String username);
 }

@@ -1,5 +1,7 @@
 package com.cipher.service;
 
+import com.cipher.vo.DecryptionResponse;
+
 /**
  * This is the base interface for Cryptography
  * @author gajagaik
@@ -7,7 +9,7 @@ package com.cipher.service;
  */
 public interface CipherService {
 
-	public String encrypt(String value,String key,String algorithm) ;
+	public String encrypt(String value,String key,String algorithm) throws Exception ;
 	
-	public String decrypt(String encrypted,String key,String algorithm);
+	public DecryptionResponse decrypt(String encrypted,String key,String algorithm) throws Exception;
 }

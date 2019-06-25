@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import com.cipher.entities.DataEntity;
 import com.cipher.exception.DatabaseException;
 import com.cipher.service.CipherService;
 import com.cipher.service.DataService;
+import com.cipher.vo.DecryptionResponse;
 import com.cipher.vo.EncryptDecryptRequest;
 
 /**
@@ -22,6 +24,7 @@ import com.cipher.vo.EncryptDecryptRequest;
  * @author gajagaik
  *
  */
+//@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class MainCipherController {
@@ -45,24 +48,30 @@ public class MainCipherController {
 	 * This function is used for to encrypt the data and store into the database using DataService
 	 * @param EncryptDecryptRequest request
 	 * @return String
+	 * @throws Exception 
 	 * @throws DatabaseException 
 	 */
 	@PostMapping(value="/getEncyption", consumes = "application/json")
-	public String getEncyption(@RequestBody EncryptDecryptRequest entityVo, HttpServletRequest request) {
+	public DataEntity getEncyption(@RequestBody EncryptDecryptRequest entityVo, HttpServletRequest request) throws Exception {
+		
 		String encryptedString=cipherService.encrypt(entityVo.getText(), entityVo.getKey(), entityVo.getAlgorithm());
+		DataEntity dataEntity=new DataEntity();
 		if(null != encryptedString) {
-			dataService.storeAndUpdateDataEntity(entityVo, request.getUserPrincipal().getName());
+			dataEntity = dataService.storeAndUpdateDataEntity(entityVo, encryptedString, request.getUserPrincipal().getName());
 		}
-		return encryptedString;
+		return dataEntity;
+
 	}
 	
 	/**
 	 * This function is used for to Decrypt the string which is passed in the request by using specified algorithm and key
 	 * @param EncryptDecryptRequest entity
 	 * @return
+	 * @throws Exception 
 	 */
-	@PostMapping(value="/getDecryption", consumes = "application/json")
-	public String getDecyption(@RequestBody EncryptDecryptRequest entityVo) {
+	@PostMapping(value="/getDecryption", consumes = "application/json", produces="application/json")
+	public DecryptionResponse getDecyption(@RequestBody EncryptDecryptRequest entityVo) throws Exception {
 		return cipherService.decrypt(entityVo.getText(), entityVo.getKey(), entityVo.getAlgorithm());
+		
 	}
 }

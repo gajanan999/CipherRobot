@@ -68,8 +68,8 @@ public class CipherIM {
 	    System.out.println(encryptedString);
 	    System.out.println(decryptedString);
 	    System.out.println("************************** AES *******************************");
-	     encryptedString = aESServiceImpl.encrypt(originalString, secretKey) ;
-	     decryptedString = aESServiceImpl.decrypt(encryptedString, secretKey) ;
+	    // encryptedString = aESServiceImpl.encrypt(originalString, secretKey) ;
+	   //  decryptedString = aESServiceImpl.decrypt(encryptedString, secretKey) ;
 	    
 	      
 	    System.out.println(originalString+ " "+ originalString.length());

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cipher.config.Messages;
 import com.cipher.dao.DataRepository;
 import com.cipher.entities.DataEntity;
 import com.cipher.exception.DatabaseException;
@@ -22,13 +23,16 @@ public class DataServiceImpl implements DataService{
 	@Autowired
 	DataRepository dataRepository;
 	
+	@Autowired
+    Messages messages;
+	
 	
 	@Override
 	public List<DataEntity> getAllDataEntities() {
 		try {
 			return (List<DataEntity>) dataRepository.findAll();
 		}catch(Exception e) {
-			logger.error(e.getMessage());
+			logger.error(messages.get("EXCEPTION_OCCURED")+e.getMessage());
 		}
 		return new ArrayList<DataEntity>();
 	}
@@ -37,21 +41,22 @@ public class DataServiceImpl implements DataService{
 	 * This function is used for store the text data int the dataentity table
 	 * @throws DatabaseException 
 	 */
-	public boolean storeAndUpdateDataEntity(EncryptDecryptRequest request,String username) {
+	public DataEntity storeAndUpdateDataEntity(EncryptDecryptRequest request,String encryptedString, String username) {
+		DataEntity dataEntity=new DataEntity();
 		try {
-			DataEntity dataEntity=new DataEntity();
-			dataEntity.setText(request.getText());
+			
+			dataEntity.setText(encryptedString);
 			dataEntity.setKey(request.getKey());
 			dataEntity.setAlgorithm(request.getAlgorithm());
 			if(null != username && ""!=username) {
 				dataEntity.setUserName(username);
-				dataRepository.save(dataEntity);
-				return true;
+				dataEntity = dataRepository.save(dataEntity);
+				return dataEntity;
 			}
 		}catch(Exception e) {
-			logger.error(e.getMessage());
+			logger.error(messages.get("EXCEPTION_OCCURED")+e.getMessage());
 		}
-		return false;
+		return dataEntity;
 		
 	}
 }
