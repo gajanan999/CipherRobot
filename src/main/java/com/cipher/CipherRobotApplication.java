@@ -19,11 +19,8 @@ public class CipherRobotApplication extends SpringBootServletInitializer impleme
 	        return application.sources(CipherRobotApplication.class);
 	    }
 
-	   /**
-	    * This code has been added for adding cross origin request for /api/** requests
-	    */
 	   @Override
-	   public void addCorsMappings(CorsRegistry registry) {
+	    public void addCorsMappings(CorsRegistry registry) {
 	        System.out.println(">=== Inside Cors Orgin Mapping addCorsMappings ===>");
 	        registry.addMapping("/api/**")
 	          .allowedOrigins("*")
@@ -31,7 +28,7 @@ public class CipherRobotApplication extends SpringBootServletInitializer impleme
 	          .allowedHeaders("*")
 	          .allowCredentials(true)
 	          .maxAge(4800);
-	   }
+	    }
 
 
 }
