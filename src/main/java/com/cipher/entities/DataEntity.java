@@ -65,6 +65,12 @@ public class DataEntity {
 	public void setAlgorithm(String algorithm) {
 		this.algorithm = algorithm;
 	}
+	@Override
+	public String toString() {
+		return "DataEntity [id=" + id + ", text=" + text + ", key=" + key + ", algorithm=" + algorithm + ", userName="
+				+ userName + "]";
+	}
+	
 	
 	
 	

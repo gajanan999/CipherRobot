@@ -5,7 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cipher.entities.DataEntity;
+import com.cipher.entities.UserEntity;
 import com.cipher.exception.DatabaseException;
 import com.cipher.service.CipherService;
 import com.cipher.service.DataService;
+import com.cipher.service.UserService;
 import com.cipher.vo.DecryptionResponse;
 import com.cipher.vo.EncryptDecryptRequest;
 
@@ -34,6 +35,9 @@ public class MainCipherController {
 	
 	@Autowired
 	CipherService cipherService;
+	
+	@Autowired
+	UserService userService;
 	
 	/**
 	 * To get all the datafrom the DataService
@@ -73,5 +77,21 @@ public class MainCipherController {
 	public DecryptionResponse getDecyption(@RequestBody EncryptDecryptRequest entityVo) throws Exception {
 		return cipherService.decrypt(entityVo.getText(), entityVo.getKey(), entityVo.getAlgorithm());
 		
+	}
+	
+	
+	@PostMapping(value="/createUser", consumes = "application/json")
+	public UserEntity createUser(@RequestBody UserEntity user, HttpServletRequest request) throws Exception {
+		
+		return userService.updateUser(user);
+
+	}
+	
+	
+	@PostMapping(value="/login", consumes = "application/json")
+	public UserEntity login(@RequestBody UserEntity user, HttpServletRequest request) throws Exception {
+		
+		return userService.login(user);
+
 	}
 }

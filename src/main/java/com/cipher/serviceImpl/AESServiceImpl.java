@@ -28,8 +28,8 @@ public class AESServiceImpl implements CryptographyService{
 	
 	private Logger logger = LoggerFactory.getLogger(AESServiceImpl.class);
 	
-	private static Cipher encryptCipher;
-	private static Cipher decryptCipher;
+	private  Cipher encryptCipher;
+	private  Cipher decryptCipher;
 
 	@Autowired
 	KeyUtility keyUtility;

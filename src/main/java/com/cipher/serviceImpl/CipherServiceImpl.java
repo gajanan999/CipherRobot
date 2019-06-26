@@ -53,12 +53,6 @@ public class CipherServiceImpl implements CipherService{
 				| InvalidAlgorithmParameterException | InvalidKeySpecException e) {
 			throw new Exception(e.getMessage());
 		}
-		
-//		if(algorithm.equals("AES")) {
-//			return aesServiceImpl.decrypt(encrypted, key);
-//		}else {
-//			return desEncryptionService.decrypt(encrypted, key);
-//		}
 	}
 	
 
