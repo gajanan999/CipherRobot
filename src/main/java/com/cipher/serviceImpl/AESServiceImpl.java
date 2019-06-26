@@ -61,6 +61,7 @@ public class AESServiceImpl implements CryptographyService{
 		decryptCipher = Cipher.getInstance(algorithm);
 		decryptCipher.init(Cipher.DECRYPT_MODE, keyUtility.get128BitKey(key));
 		byte[] oo=  Base64.getDecoder().decode(encrypted.getBytes("UTF-8"));
+		System.out.println(new String(decryptCipher.doFinal(oo)));
 		return new String(decryptCipher.doFinal(oo));
 	   
 	}

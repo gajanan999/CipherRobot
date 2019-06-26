@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -14,6 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="dataentity")
+@NamedQueries({ @NamedQuery(name = "findByText", query = "from DataEntity u where u.text= ?1") })
 public class DataEntity {
 
 	@Id

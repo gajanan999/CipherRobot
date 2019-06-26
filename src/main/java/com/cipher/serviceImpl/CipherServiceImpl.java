@@ -46,6 +46,8 @@ public class CipherServiceImpl implements CipherService{
 			String decryptedText = cryptographyFactory.getService(algorithm).decrypt(encrypted, key);
 			response.setDecryptedText(decryptedText);
 			response.setEncryptedText(encrypted);
+			response.setStatus("SUCCESS");
+			response.setMessage("SUCCESS");
 			return response;
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | InvalidKeySpecException e) {
