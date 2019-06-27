@@ -16,32 +16,31 @@ import com.cipher.service.CipherService;
 import com.cipher.vo.DecryptionResponse;
 
 @Service
-public class CipherServiceImpl implements CipherService{
-	
+public class CipherServiceImpl implements CipherService {
 
 	@Autowired
 	AESServiceImpl aesServiceImpl;
-	
+
 	@Autowired
 	DESEncryptionService desEncryptionService;
-	
+
 	@Autowired
 	CryptographyFactory cryptographyFactory;
-	
+
 	@Override
-	public String encrypt(String value,String key,String algorithm) throws Exception {
+	public String encrypt(String value, String key, String algorithm) throws Exception {
 		try {
 			return cryptographyFactory.getService(algorithm).encrypt(value, key);
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | InvalidKeySpecException | IllegalBlockSizeException
 				| BadPaddingException e) {
 			throw new Exception(e.getMessage());
-		}	
+		}
 	}
 
 	@Override
-	public DecryptionResponse decrypt(String encrypted,String key,String algorithm) throws Exception {
-		DecryptionResponse response= new DecryptionResponse();
+	public DecryptionResponse decrypt(String encrypted, String key, String algorithm) throws Exception {
+		DecryptionResponse response = new DecryptionResponse();
 		try {
 			String decryptedText = cryptographyFactory.getService(algorithm).decrypt(encrypted, key);
 			response.setDecryptedText(decryptedText);
@@ -54,6 +53,5 @@ public class CipherServiceImpl implements CipherService{
 			throw new Exception(e.getMessage());
 		}
 	}
-	
 
 }

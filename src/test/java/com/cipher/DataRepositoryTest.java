@@ -35,9 +35,6 @@ public class DataRepositoryTest {
 	    
 	    entityManager.persist(dataEntity);
 	    entityManager.flush();
-	    
-	    
-	 
 	    // when
 	    DataEntity found = dataRepository.findByText(dataEntity.getText());
 	 

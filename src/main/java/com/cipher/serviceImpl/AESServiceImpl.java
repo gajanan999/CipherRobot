@@ -24,52 +24,52 @@ import com.cipher.utility.IvParameterUtility;
 import com.cipher.utility.KeyUtility;
 
 @Service
-public class AESServiceImpl implements CryptographyService{
-	
+public class AESServiceImpl implements CryptographyService {
+
 	private Logger logger = LoggerFactory.getLogger(AESServiceImpl.class);
-	
-	private  Cipher encryptCipher;
-	private  Cipher decryptCipher;
+
+	private Cipher encryptCipher;
+	private Cipher decryptCipher;
 
 	@Autowired
 	KeyUtility keyUtility;
-	
+
 	@Autowired
 	IvParameterUtility ivParameterUtility;
-	
+
 	@Autowired
 	CipherService cipherService;
-	
+
 	@Autowired
-    Messages messages;
-	
+	Messages messages;
+
 	@Value("${AES_ALGORITHM}")
 	private String algorithm;
-	
-	public String encrypt(String value, String key) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
-		
-    	encryptCipher = Cipher.getInstance(algorithm);
-    	encryptCipher.init(Cipher.ENCRYPT_MODE, keyUtility.get128BitKey(key));
-		byte[] inputBytes = value.getBytes(StandardCharsets.ISO_8859_1);	
+
+	public String encrypt(String value, String key) throws NoSuchAlgorithmException, NoSuchPaddingException,
+			InvalidKeyException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
+
+		encryptCipher = Cipher.getInstance(algorithm);
+		encryptCipher.init(Cipher.ENCRYPT_MODE, keyUtility.get128BitKey(key));
+		byte[] inputBytes = value.getBytes(StandardCharsets.ISO_8859_1);
 		return Base64.getEncoder().encodeToString((encryptCipher.doFinal(inputBytes)));
-	    
+
 	}
 
-	
-	public String decrypt(String encrypted, String key) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
-	
+	public String decrypt(String encrypted, String key) throws NoSuchAlgorithmException, NoSuchPaddingException,
+			InvalidKeyException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
+
 		decryptCipher = Cipher.getInstance(algorithm);
 		decryptCipher.init(Cipher.DECRYPT_MODE, keyUtility.get128BitKey(key));
-		byte[] oo=  Base64.getDecoder().decode(encrypted);
-		//System.out.println(new String(decryptCipher.doFinal(oo)));
+		byte[] oo = Base64.getDecoder().decode(encrypted);
+		// System.out.println(new String(decryptCipher.doFinal(oo)));
 		return new String(decryptCipher.doFinal(oo));
-	   
-	}
 
+	}
 
 	@Override
 	public String getType() {
-		 return "AES";
+		return "AES";
 	}
 
 }

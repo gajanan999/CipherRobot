@@ -13,22 +13,17 @@ public class CipherRobotApplication extends SpringBootServletInitializer impleme
 	public static void main(String[] args) {
 		SpringApplication.run(CipherRobotApplication.class, args);
 	}
-	
-	 @Override
-	    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-	        return application.sources(CipherRobotApplication.class);
-	    }
 
-	   @Override
-	    public void addCorsMappings(CorsRegistry registry) {
-	        System.out.println(">=== Inside Cors Orgin Mapping addCorsMappings ===>");
-	        registry.addMapping("/api/**")
-	          .allowedOrigins("*")
-	          .allowedMethods("POST", "GET",  "PUT", "OPTIONS", "DELETE")
-	          .allowedHeaders("*")
-	          .allowCredentials(true)
-	          .maxAge(4800);
-	    }
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(CipherRobotApplication.class);
+	}
 
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+
+		registry.addMapping("/api/**").allowedOrigins("*").allowedMethods("POST", "GET", "PUT", "OPTIONS", "DELETE")
+				.allowedHeaders("*").allowCredentials(true).maxAge(4800);
+	}
 
 }
