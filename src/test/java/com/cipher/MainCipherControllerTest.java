@@ -2,15 +2,18 @@ package com.cipher;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Base64;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import com.cipher.vo.EncryptDecryptRequest;
 
 
 
@@ -38,7 +41,24 @@ public class MainCipherControllerTest extends AbstractTest {
 		assertEquals(200, status);
 	}
 	
-	
+	/*
+	 * @Test public void createProduct() throws Exception { String uri =
+	 * "/api/getEncyption"; EncryptDecryptRequest request = new
+	 * EncryptDecryptRequest(); request.setAlgorithm("AES");
+	 * request.setKey("gajanan"); request.setText("Hello"); String token = new
+	 * String(Base64.getEncoder().encode( ("admin" + ":" + "password").getBytes()));
+	 * 
+	 * String inputJson = super.mapToJson(request); MvcResult mvcResult =
+	 * mvc.perform(MockMvcRequestBuilders.post(uri).header("Authorization", "Basic "
+	 * + token)
+	 * .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn(
+	 * );
+	 * 
+	 * int status = mvcResult.getResponse().getStatus(); assertEquals(200, status);
+	 * String content = mvcResult.getResponse().getContentAsString();
+	 * assertEquals(content,
+	 * "Text Successfully encrypted and added to the database"); }
+	 */
 
 	
 }

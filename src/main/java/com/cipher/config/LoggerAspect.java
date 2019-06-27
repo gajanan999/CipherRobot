@@ -19,8 +19,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class LoggerAspect {
 	
-	@Autowired
-	Messages messages;
+	
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -38,7 +37,7 @@ public class LoggerAspect {
 	@AfterThrowing (pointcut = "execution(* com.ciphe.serviceImpl.*.*(..))", throwing = "ex")
     public void logAfterThrowingAllMethods(Exception ex) throws Throwable
     {
-		logger.error(messages.get("EXCEPTION_OCCURED"),ex.getMessage(),ex);
+		logger.error("Exception has been occured",ex.getMessage(),ex);
 		
     }
 }
