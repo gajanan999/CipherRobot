@@ -10,6 +10,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.cipher.vo.ApiError;
 
+/**
+ * When exception come this class will return the response to the host
+ * @author gajagaik
+ *
+ */
 @ControllerAdvice
 public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler{
 
