@@ -43,9 +43,9 @@ public class KeyUtilityService implements KeyUtility {
 		MessageDigest sha = MessageDigest.getInstance("SHA-256");
 	    byte[]  key = sha.digest(pass);
 	    key = Arrays.copyOf(key, 16);
-	    for(byte b:key) {
-	    	System.out.print(b+",");
-	    }
+//	    for(byte b:key) {
+//	    	System.out.print(b+",");
+//	    }
 	    return new SecretKeySpec(key, "AES");
 	}
 	
